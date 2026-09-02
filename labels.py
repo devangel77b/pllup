@@ -75,11 +75,13 @@ class SpineLabel(BaseLabel):
         # Leaving a safe margin down from the title line
         current_y = v_height - EDGE_MARGIN - TITLE_SIZE - CALL_SIZE - 2.0
         
-        for part in call_parts:
-            p_width = canvas_obj.stringWidth(part, self.font, CALL_SIZE)
-            # Centers each part across the 20mm virtual width
-            canvas_obj.drawString((v_width - p_width) / 2, current_y, part)
-            current_y -= (CALL_SIZE + 1.5)  # Move down for the next line stack
+        for line in book.call_number_lines:
+            if current_y < EDGE_MARGIN:
+                logging.warning(f"Call number for {book.asset_id} truncated due to label height.")
+                break
+            p_width = canvas_obj.stringWidth(line, self.font, CALL_SIZE)
+            canvas_obj.drawString((v_width - p_width) / 2, current_y, line)
+            current_y -= (CALL_SIZE + 1.2)
             
         # 5. Restore the canvas coordinate landscape back to original configuration
         canvas_obj.restoreState()
