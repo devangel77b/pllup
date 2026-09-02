@@ -65,10 +65,21 @@ class SpineLabel(BaseLabel):
         
         display_title = book.title[:12].upper()
         t_width=canvas_obj.stringWidth(display_title, self.font, TITLE_SIZE)
-        c_width=canvas_obj.stringWidth(book.call_number, self.font, CALL_SIZE)
         canvas_obj.setFont(self.font, TITLE_SIZE)
         canvas_obj.drawString((v_width-t_width)/2, v_height-EDGE_MARGIN-TITLE_SIZE, display_title)
-        canvas_obj.setFont(self.font, CALL_SIZE)
-        canvas_obj.drawString((v_width-c_width)/2, EDGE_MARGIN, book.call_number)
-        
 
+        call_parts = book.call_number.split()
+        canvas_obj.setFont(self.font, CALL_SIZE)
+        
+        # Stack lines from top to bottom, starting right below the title area
+        # Leaving a safe margin down from the title line
+        current_y = v_height - EDGE_MARGIN - TITLE_SIZE - CALL_SIZE - 2.0
+        
+        for part in call_parts:
+            p_width = canvas_obj.stringWidth(part, self.font, CALL_SIZE)
+            # Centers each part across the 20mm virtual width
+            canvas_obj.drawString((v_width - p_width) / 2, current_y, part)
+            current_y -= (CALL_SIZE + 1.5)  # Move down for the next line stack
+            
+        # 5. Restore the canvas coordinate landscape back to original configuration
+        canvas_obj.restoreState()
