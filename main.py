@@ -10,9 +10,9 @@ if __name__ == "__main__":
     
     # 1. Instantiate concrete data entities
     catalog_queue = [
-        Book(title="The Hobbit", author="J.R.R. Tolkien", call_number="FIC TOL", asset_id="LIB101"),
-        Book(title="A Brief History of Time", author="Stephen Hawking", call_number="523.1 HAW", asset_id="LIB102"),
-        Book(title="Introduction to Algorithms", author="Thomas H. Cormen", call_number="005.1 COR", asset_id="LIB103")
+        Book(title="The Hobbit", author="J.R.R. Tolkien", call_number="PR6039.032 H63 1973", asset_id="LIB101"),
+        Book(title="A Brief History of Time", author="Stephen Hawking", call_number="QB981 .H377 1988", asset_id="LIB102"),
+        Book(title="Introduction to Algorithms", author="Thomas H. Cormen", call_number="QA76.6 .C67 1990", asset_id="LIB103")
     ]
     
     # 2. Instantiate our verified, stateful Monospace view layout

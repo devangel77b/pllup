@@ -56,12 +56,19 @@ class SpineLabel(BaseLabel):
 
     def draw(self, canvas_obj: Canvas, book: Book):
         logging.info(f"Rendering spine label for {book.asset_id}")
+
+        canvas_obj.saveState()
+        canvas_obj.translate(self.width, 0)
+        canvas_obj.rotate(90)
+        v_width = self.height
+        v_height = self.width
+        
         display_title = book.title[:12].upper()
         t_width=canvas_obj.stringWidth(display_title, self.font, TITLE_SIZE)
         c_width=canvas_obj.stringWidth(book.call_number, self.font, CALL_SIZE)
         canvas_obj.setFont(self.font, TITLE_SIZE)
-        canvas_obj.drawString((self.width-t_width)/2, self.height-EDGE_MARGIN-TITLE_SIZE, display_title)
+        canvas_obj.drawString((v_width-t_width)/2, v_height-EDGE_MARGIN-TITLE_SIZE, display_title)
         canvas_obj.setFont(self.font, CALL_SIZE)
-        canvas_obj.drawString((self.width-c_width)/2, EDGE_MARGIN, book.call_number)
+        canvas_obj.drawString((v_width-c_width)/2, EDGE_MARGIN, book.call_number)
         
 
