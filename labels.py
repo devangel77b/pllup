@@ -68,7 +68,6 @@ class SpineLabel(BaseLabel):
         canvas_obj.setFont(self.font, TITLE_SIZE)
         canvas_obj.drawString((v_width-t_width)/2, v_height-EDGE_MARGIN-TITLE_SIZE, display_title)
 
-        call_parts = book.call_number.split()
         canvas_obj.setFont(self.font, CALL_SIZE)
         
         # Stack lines from top to bottom, starting right below the title area
