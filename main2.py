@@ -17,11 +17,11 @@ if __name__ == "__main__":
     
     # 2. Instantiate our verified, stateful Monospace view layout
     # Defaults natively to our 50mm x 30mm dimensions and registered monospace font
-    #spine_layout = SpineLabel()
-    spine_layout = BarcodeLabel()
+    spine_layout = SpineLabel()
+    #spine_layout = BarcodeLabel()
     
     # 3. Fire our targeted single-roll pipeline controller
-    output_target = "barcode_roll_output.pdf"
+    output_target = "spine_roll_output.pdf"
     generate_continuous_label_stream(output_target, catalog_queue, spine_layout)
     
     print(f"\nExecution loop complete. Output file written to: {output_target}")
