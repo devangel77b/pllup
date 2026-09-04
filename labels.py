@@ -64,8 +64,8 @@ class SpineLabel(BaseLabel):
         v_height = self.width
         
         display_title = book.title[:12].upper()
-        t_width=canvas_obj.stringWidth(display_title, "Courier-Bold", TITLE_SIZE)
-        canvas_obj.setFont("Courier-Bold", TITLE_SIZE)
+        t_width=canvas_obj.stringWidth(display_title, "Helvetica-Bold", TITLE_SIZE)
+        canvas_obj.setFont("Helvetica-Bold", TITLE_SIZE)
         canvas_obj.drawString((v_width-t_width)/2, v_height-EDGE_MARGIN-TITLE_SIZE, display_title)
 
         canvas_obj.setFont("Courier-Bold", CALL_SIZE)
