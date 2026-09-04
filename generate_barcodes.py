@@ -52,11 +52,11 @@ if __name__ == "__main__":
     current_number = args.start
     updated_records = []
 
-    print(f"\n--- Processing {len(reader)} rows using pattern: {args.location}-0000d ---")
+    print(f"\n--- Processing {len(reader)} rows using pattern: {args.location}0000d ---")
 
     for row in reader:
         # Generate padded 5-digit sequence suffix
-        barcode_string = f"{args.location}-{current_number:05d}"
+        barcode_string = f"{args.location}{current_number:05d}"
         
         # Staging the updates
         row['Barcode'] = barcode_string
