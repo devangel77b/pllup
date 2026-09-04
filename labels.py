@@ -28,7 +28,7 @@ try:
 except Exception as e:
     logging.warning(f"Could not load Ubuntu Monospace from {FONT_DIR}: {e}. Falling back to Courier")
     DEFAULT_FONT = "Courier"
-
+READABLE_FONT = "Helvetica-Bold"
 
 
     
@@ -66,11 +66,11 @@ class SpineLabel(BaseLabel):
         v_height = self.width
         
         display_title = book.title[:12].upper()
-        t_width=canvas_obj.stringWidth(display_title, "Helvetica", TITLE_SIZE)
-        canvas_obj.setFont("Helvetica", TITLE_SIZE)
+        t_width=canvas_obj.stringWidth(display_title, READABLE_FONT, TITLE_SIZE)
+        canvas_obj.setFont(READABLE_FONT, TITLE_SIZE)
         canvas_obj.drawString((v_width-t_width)/2, v_height-EDGE_MARGIN-TITLE_SIZE, display_title)
 
-        canvas_obj.setFont("UbuntuMono", CALL_SIZE)
+        canvas_obj.setFont(DEFAULT_FONT, CALL_SIZE)
         
         # Stack lines from top to bottom, starting right below the title area
         # Leaving a safe margin down from the title line
@@ -80,7 +80,7 @@ class SpineLabel(BaseLabel):
             if current_y < EDGE_MARGIN:
                 logging.warning(f"Call number for {book.asset_id} truncated due to label height.")
                 break
-            p_width = canvas_obj.stringWidth(line, "UbuntuMono", CALL_SIZE)
+            p_width = canvas_obj.stringWidth(line, DEFAULT_FONT, CALL_SIZE)
             canvas_obj.drawString((v_width - p_width) / 2, current_y, line)
             current_y -= (CALL_SIZE + 1.2)
             
@@ -109,7 +109,7 @@ class BarcodeLabel(BaseLabel):
         start_y = (pocket_center_y - (total_barcode_footprint / 2.0)) + BARCODE_TEXT_SIZE
         
         short_title = book.title[:32].upper()
-        canvas_obj.setFont("Helvetica-Bold", 7)
+        canvas_obj.setFont(READABLE_FONT, 7)
         canvas_obj.drawCentredString(self.width / 2.0, title_y, short_title)
 
         # 2. Middle Section: Code 128 Barcode Layout
@@ -120,7 +120,7 @@ class BarcodeLabel(BaseLabel):
             barHeight=barcode_height,
             quiet=True,
             humanReadable=True,
-            fontName="UbuntuMono",
+            fontName=DEFAULT_FONT,
             fontSize=8
         )
         
@@ -132,7 +132,7 @@ class BarcodeLabel(BaseLabel):
         barcode.drawOn(canvas_obj, start_x, start_y)
 
         # 3. Bottom Section: Centered "S&E library" institutional marker text
-        canvas_obj.setFont("Helvetica-Bold", MARKER_FONT_SIZE)
+        canvas_obj.setFont(READABLE_FONT, MARKER_FONT_SIZE)
         canvas_obj.drawCentredString(self.width / 2.0, marker_y, "S&E LIBRARY")
         
         canvas_obj.restoreState()
