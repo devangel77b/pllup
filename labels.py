@@ -88,7 +88,7 @@ class SpineLabel(BaseLabel):
 
 
 class BarcodeLabel(BaseLabel):
-    def __init__(self,  width: float=50.8*mm, height: float=25.4*mm):
+    def __init__(self,  width: float=50*mm, height: float=30*mm):
         super().__init__(width,height)
 
     def draw(self, canvas_obj: Canvas, book:Book):
@@ -102,8 +102,9 @@ class BarcodeLabel(BaseLabel):
         # Turning on humanReadable means ReportLab natively prints the barcode string text below the bars.
         barcode = code128.Code128(
             str(book.asset_id),
-            barWidth=0.25 * mm,
-            barHeight=11.0 * mm,
+            barWidth=0.375 * mm,
+            barHeight=12 * mm,
+            quiet=True,
             humanReadable=True
         )
         
@@ -112,7 +113,7 @@ class BarcodeLabel(BaseLabel):
         start_x = (self.width - barcode_width) / 2.0
         
         # Draw barcode in the center vertical region
-        barcode.drawOn(canvas_obj, start_x, 9 * mm)
+        barcode.drawOn(canvas_obj, start_x, 10 * mm)
 
         # 3. Bottom Section: Centered "S&E library" institutional marker text
         canvas_obj.setFont("Helvetica-Bold", 8)
