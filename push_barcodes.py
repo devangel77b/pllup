@@ -22,7 +22,12 @@ if __name__ == "__main__":
     # Pack your cookie and a browser-like User-Agent into the network headers
     headers = {
         'Cookie': args.cookie,
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) SchoolLibraryAutomation/1.0'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': '*/*',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Referer': 'https://librarything.com',
+        'Origin': 'https://www.librarything.com',
+        'X-Requested-With': 'XMLHttpRequest'
     }
 
     # Let Python naturally raise FileNotFoundError if the path is invalid
