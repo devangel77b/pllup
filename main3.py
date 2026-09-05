@@ -36,7 +36,7 @@ def main():
 
     # 3. Instantiate your verified layouts (matching your physical label media boundaries)
     spine_layout = SpineLabel()
-    barcode_layout = BarcodeLabel()
+    barcode_layout = BarcodeLabel(marker_text="EVANGELISTA LIBRARY")
 
     # 4. Fire the single-roll stream spoolers sequentially
     spine_target = "spine_labels.pdf"
