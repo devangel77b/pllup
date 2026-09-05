@@ -94,6 +94,8 @@ if __name__ == "__main__":
 
     # Output Pathway B: Save to Local Staging File
     else:
+        fieldnames = updated_records[0].keys()
+        
         with open(args.output, mode='w', encoding='utf-8', newline='') as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter='\t')
             writer.writeheader()
