@@ -90,8 +90,9 @@ class SpineLabel(BaseLabel):
 
 
 class BarcodeLabel(BaseLabel):
-    def __init__(self,  width: float=50*mm, height: float=30*mm):
+    def __init__(self,  width: float=50*mm, height: float=30*mm, marker_text="S&E LIBRARY"):
         super().__init__(width,height)
+        self.marker_text = marker_text
 
     def draw(self, canvas_obj: Canvas, book:Book):
         canvas_obj.saveState()
@@ -133,7 +134,7 @@ class BarcodeLabel(BaseLabel):
 
         # 3. Bottom Section: Centered "S&E library" institutional marker text
         canvas_obj.setFont(READABLE_FONT, MARKER_FONT_SIZE)
-        canvas_obj.drawCentredString(self.width / 2.0, marker_y, "S&E LIBRARY")
+        canvas_obj.drawCentredString(self.width / 2.0, marker_y, self.marker_text)
         
         canvas_obj.restoreState()
     
