@@ -55,13 +55,28 @@ if __name__ == "__main__":
     print(f"\n--- Processing {len(reader)} rows using pattern: {args.location}0000d ---")
 
     for row in reader:
+
+        # Do barcode
         # Generate padded 5-digit sequence suffix
         barcode_string = f"{args.location}{current_number:05d}"
-        
         # Staging the updates
         row['Barcode'] = barcode_string
-        updated_records.append(row)
+
+        # do call number
+        raw_lcc = row.get('LC Classification', '').strip()
+        pub_year = row.get('Date', '').strip()
+        if raw_lcc:
+            if pub_year and pub_year in raw_lcc:
+                lcc_year = raw_lcc
+            elif pub_year:
+                lcc_year = f"{raw_lcc} {pub_year}"
+            else:
+                lcc_year = raw_lcc
+        else:
+            lcc_year = ""
+        row['LC Classification'] = lcc_year
         
+        updated_records.append(row)
         current_number += 1
 
 
@@ -71,18 +86,14 @@ if __name__ == "__main__":
         
     # Output Pathway A: Screen Check Preview
     if not args.output:
-        print(f"{'Book Id':<12} | {'Title':<40} | {'Updated Barcode':<15}")
+        print(f"{'Book Id':<12} | {'Title':<40} | {'LC Classification':<20} | {'Updated Barcode':<15}")
         for row in updated_records:
             title_trunc = row.get('Title', 'Unknown Title')[:40]
-            print(f"{row['Book Id']:<12} | {title_trunc:<40} | {row['Barcode']:<15}")
+            print(f"{row['Book Id']:<12} | {title_trunc:<40} | {row['LC Classification']:<20} | {row['Barcode']:<15}")
         print("\n💡 Run the script again adding '--output marked_catalog.tsv' to save this dataset once verified.")
 
     # Output Pathway B: Save to Local Staging File
     else:
-        fieldnames = list(reader[0].keys())
-        if 'Barcode' not in fieldnames:
-            fieldnames.append('Barcode')
-            
         with open(args.output, mode='w', encoding='utf-8', newline='') as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter='\t')
             writer.writeheader()
