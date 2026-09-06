@@ -89,4 +89,5 @@ def run_keyboard_sync(tsv_path):
     print("\n🎉 Synchronization complete!")
 
 if __name__ == "__main__":
-    run_keyboard_sync("b116-marked.tsv")
+    #run_keyboard_sync("b116-marked.tsv")
+    run_keyboard_sync("jse.tsv")

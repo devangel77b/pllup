@@ -40,7 +40,7 @@ def main():
 
     # 4. Fire the single-roll stream spoolers sequentially
     spine_target = "senior-projects-spine.pdf"
-    barcode_target = "senior-proejcts-barcode.pdf"
+    barcode_target = "senior-projects-barcode.pdf"
 
     print(f"\nProcessing Pipeline 1: Compiling Spine Roll...")
     generate_continuous_label_stream(spine_target, books, spine_layout)
