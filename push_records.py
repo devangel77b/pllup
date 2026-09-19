@@ -5,6 +5,7 @@ import pyautogui
 import time
 import subprocess
 import sys
+import argparse
 
 # Safety Failsafe: Moving your mouse to the top-left pixel instantly kills execution
 pyautogui.FAILSAFE = True
@@ -89,5 +90,11 @@ def run_keyboard_sync(tsv_path):
     print("\n🎉 Synchronization complete!")
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Push cleaned tsv data back to Librarything")
+    parser.add_argument("input_file", help="Path to tsv file; should have title, LCC, and barcode numbers")
+    args=parser.parse_args()
+
+    run_keyboard_sync(args.input_file)
     #run_keyboard_sync("b116-marked.tsv")
-    run_keyboard_sync("jse.tsv")
+    #run_keyboard_sync("jse.tsv")
+    #run_keyboard_sync("g201-marked.tsv")

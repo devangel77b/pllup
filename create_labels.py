@@ -4,6 +4,7 @@ import os
 import sys
 import logging
 from reportlab.lib.units import mm
+import argparse
 
 # Direct dependencies following your exact repo pattern
 from importers import TinyCatCSVImporter
@@ -15,11 +16,10 @@ logging.basicConfig(level=logging.INFO)
 
 
 
-def main():
+def main(ifilename):
     print("=== Launching Split-Stream TinyCat Print Runner ===")
 
-    #tsv_source_path = 'librarything_devangel77b_202609041716.tsv'
-    tsv_source_path = 'senior-projects.tsv'
+    tsv_source_path = ifilename
     
     if not os.path.exists(tsv_source_path):
         logging.error(f"Provided source file does not exist: {tsv_source_path}")
@@ -39,8 +39,11 @@ def main():
     barcode_layout = BarcodeLabel(marker_text="S&E LIBRARY")
 
     # 4. Fire the single-roll stream spoolers sequentially
-    spine_target = "senior-projects-spine.pdf"
-    barcode_target = "senior-projects-barcode.pdf"
+    dirpath = os.path.dirname(ifilename)
+    basename = os.path.basename(ifilename)
+    filename = os.path.splitext(basename)[0]
+    spine_target = os.path.join(dirpath,filename+"-spine.pdf")
+    barcode_target = os.path.join(dirpath,filename+"-barcode.pdf")
 
     print(f"\nProcessing Pipeline 1: Compiling Spine Roll...")
     generate_continuous_label_stream(spine_target, books, spine_layout)
@@ -54,4 +57,9 @@ def main():
     print(f" -> Barcode Roll Target: {barcode_target}")
 
 if __name__ == "__main__":
-    main()
+
+    parser = argparse.ArgumentParser(description="Print spine labels and barcode labels for Science and Engineering Library use")
+    parser.add_argument("input_file", help="Path to tsv file; should have title, LCC, and barcode numbers")
+    args=parser.parse_args()
+    
+    main(args.input_file)
