@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
 
     
-    with open(args.input_file, mode='r', encoding='utf-8') as f:
+    with open(args.input_file, mode='r', encoding='cp1252') as f:
         # LibraryThing TSV exports use tab delimiters
         reader = list(csv.DictReader(f, delimiter='\t'))
 
