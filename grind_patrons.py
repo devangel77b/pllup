@@ -12,7 +12,6 @@ import logging
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Pull patron information from Genesis export")
     parser.add_argument("input", help="exported xlsx from Genesis")
-    parser.add_argument("--code",help="3 digit school-year code for constructing email address, e.g. 427",required=True)
     parser.add_argument("--output", help="optional path to save the result to. If omitted it prints preview to screen.")
 
     args = parser.parse_args()
@@ -40,7 +39,8 @@ if __name__ == "__main__":
     df[['Last', 'firstnames']] = df['Full name'].str.split(',',n=1,expand=True)
     df[['First','Middle']] = df['firstnames'].str.split(n=1,expand=True).fillna('')
     frhsd_email = (
-        args.code +
+        '4'+
+        df['Barcode'].astype("string").str.strip().str[:2] +
         df['First'].str.strip().str.lower().str[0]+
         df['Last'].str.strip().str.lower()+
         '@frhsd.com'
